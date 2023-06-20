@@ -4,7 +4,8 @@ import SmallCard from "@/components/SmallCard";
 import MediumCard from "@/components/MediumCard";
 import LargeCard from "@/components/LargeCard";
 import Footer from "@/components/Footer";
-export default function Home({ exploreData, cardsData }) {
+import { getExploreData, getCardsData } from "@/lib/api";
+export default function Home({ exploreData, cardData }) {
   const data = [
     {
       img: "https://links.papareact.com/5j2",
@@ -91,18 +92,13 @@ export default function Home({ exploreData, cardsData }) {
   );
 }
 
-export const getStaticProps = async () => {
-  const exploreData = await fetch("https://www.jsonkeeper.com/b/4G1G").then(
-    (res) => res.json()
-  );
-
-  const cardsData = await fetch(" https://jsonkeeper.com/b/PRQX").then((res) =>
-    res.json()
-  );
+export async function getStaticProps() {
+  const exploreData = await getExploreData();
+  const cardData = await getCardsData();
   return {
     props: {
       exploreData,
-      cardsData,
+      cardData,
     },
   };
-};
+}
